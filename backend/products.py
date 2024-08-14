@@ -135,27 +135,3 @@ def delete_product(cnx: MySQLConnection, product_id: int) -> int:
 
 if __name__ == "__main__":
     cnx = get_sql_connection()
-
-    # products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
-    # print(products[-1])
-    #
-
-    updated_data: Dict[str, Union[str, float]] = {
-        "name": "domestic gas (12kg)",
-        "uom_id": 2,
-        "price_per_unit": 6700,
-    }
-
-    #
-    # lastrowid: int = insert_new_product(cnx, new_product)
-    # print(lastrowid)
-    #
-    # products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
-    # print(products[-1])
-
-    product_id: int = 10
-    rowcount: int = update_product(cnx, product_id, updated_data)
-    print(rowcount)
-
-    rowcount = delete_product(cnx, 11)
-    print(rowcount)
