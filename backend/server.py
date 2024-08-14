@@ -25,6 +25,7 @@ def root():
 @app.route("/products", methods=["GET"])
 def get_products():
     """
+    GET /products
     READ/GET all the products from the API.
     """
     # Get the list of all the products from the database
