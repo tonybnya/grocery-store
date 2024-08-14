@@ -28,14 +28,6 @@ REFERENCES `gs`.`uom` (`uom_id`)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
--- Insert records into the 'uom' table
-INSERT INTO `gs`.`uom` (`uom_id`, `uom_name`) VALUES (1, 'kg');
-INSERT INTO `gs`.`uom` (`uom_id`, `uom_name`) VALUES (2, 'each');
-
--- Insert records into the 'products' table
-INSERT INTO `gs`.`products` (`product_id`, `name`, `uom_id`, `price_per_unit`) VALUES (1, 'toothpaste', 2, 1200);
-INSERT INTO `gs`.`products` (`product_id`, `name`, `uom_id`, `price_per_unit`) VALUES (2, 'rice', 1, 400);
-
 -- Create the 'orders' table with the necessary columns and primary key
 CREATE TABLE `gs`.`orders` (
     `order_id` INT NOT NULL AUTO_INCREMENT,
@@ -56,9 +48,3 @@ CREATE TABLE `gs`.`order_details` (
     CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `gs`.`orders` (`order_id`) ON DELETE NO ACTION ON UPDATE RESTRICT,
     CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `gs`.`products` (`product_id`) ON DELETE NO ACTION ON UPDATE RESTRICT
 );
-
--- Insert records into the 'orders' table
-INSERT INTO `gs`.`orders` (`order_id`, `customer_name`, `total`, `date`) VALUES (1, 'Tony', 2000, '2024-08-13 00:00:00');
-
--- Insert records into the 'order_details' table
-INSERT INTO `gs`.`order_details` (`order_id`, `product_id`, `quantity`, `total_price`) VALUES (1, 1, 2, 2400);
