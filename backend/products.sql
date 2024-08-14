@@ -9,3 +9,6 @@ INSERT INTO `gs`.`products` (`product_id`, `name`, `uom_id`, `price_per_unit`) V
 INSERT INTO `gs`.`products` (`product_id`, `name`, `uom_id`, `price_per_unit`) VALUES (8, 'oil (bottle)', 2, 1000);
 INSERT INTO `gs`.`products` (`product_id`, `name`, `uom_id`, `price_per_unit`) VALUES (9, 'soap', 2, 350);
 INSERT INTO `gs`.`products` (`product_id`, `name`, `uom_id`, `price_per_unit`) VALUES (10, 'domestic gas (12kg bottle)', 2, 6500);
+
+-- Join products with units of measure (uom) tables
+SELECT products.product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name FROM products INNER JOIN uom ON products.uom_id=uom.uom_id;
