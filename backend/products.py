@@ -64,6 +64,8 @@ def insert_new_product(
         "INSERT INTO products (name, uom_id, price_per_unit) VALUES (%s, %s, %s)"
     )
 
+    # Use the product dictionary provided to build
+    # a tuple containing data to record/insert into the database
     data: Tuple[Union[int, str, float]] = (
         product["name"],
         product["uom_id"],
