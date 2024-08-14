@@ -2,7 +2,7 @@
 Products DAO (Data Access Object)
 """
 
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 
 from mysql.connector import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
@@ -43,10 +43,6 @@ def get_all_products(cnx: MySQLConnection) -> List[Dict[str, Union[int, str, flo
             }
         )
 
-    # Close the cursor & the connection to the database
-    cursor.close()
-    cnx.close()
-
     return products
 
 
@@ -59,10 +55,41 @@ def insert_new_product(
     Input:  product | a dictionary representing the product to insert
     Output: the last record of the products table
     """
-    pass
+    # Define an instance of the MySQL cursor
+    cursor: MySQLCursor = cnx.cursor()
+
+    # Define a string representing a query
+    # to insert a new product into the database
+    query: str = (
+        "INSERT INTO products (name, uom_id, price_per_unit) VALUES (%s, %s, %s)"
+    )
+
+    data: Tuple[Union[int, str, float]] = (
+        product["name"],
+        product["uom_id"],
+        product["price_per_unit"],
+    )
+
+    # Execute the query with the corresponding data
+    cursor.execute(query, data)
+    cnx.commit()
+
+    return cursor.lastrowid
 
 
 if __name__ == "__main__":
     cnx = get_sql_connection()
+
     products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
-    print(products)
+    print(products[-1])
+
+    new_product: Dict[str, Union[str, float]] = {
+        "name": "milk (bottle)",
+        "uom_id": 2,
+        "price_per_unit": 3200,
+    }
+
+    insert_new_product(cnx, new_product)
+
+    products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
+    print(products[-1])
