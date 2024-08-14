@@ -2,7 +2,7 @@
 Products DAO (Data Access Object)
 """
 
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from mysql.connector import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
@@ -48,12 +48,12 @@ def get_all_products(cnx: MySQLConnection) -> List[Dict[str, Union[int, str, flo
 
 def insert_new_product(
     cnx: MySQLConnection, product: Dict[str, Union[int, str, float]]
-):
+) -> Optional[int]:
     """
     Insert a new product into the database.
     Input:  cnx     | a MySQL connection object
     Input:  product | a dictionary representing the product to insert
-    Output: the last record of the products table
+    Output: the number of records into the table or None
     """
     # Define an instance of the MySQL cursor
     cursor: MySQLCursor = cnx.cursor()
@@ -89,7 +89,8 @@ if __name__ == "__main__":
         "price_per_unit": 3200,
     }
 
-    insert_new_product(cnx, new_product)
+    lastrowid: int = insert_new_product(cnx, new_product)
+    print(lastrowid)
 
     products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
     print(products[-1])
