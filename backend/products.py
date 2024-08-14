@@ -79,20 +79,59 @@ def insert_new_product(
     return cursor.lastrowid
 
 
+def update_product(
+    cnx: MySQLConnection,
+    product_id: int,
+    updated_data: Dict[str, Union[int, str, float]],
+) -> int:
+    """
+    Update an existing product in the database.
+    Input:  cnx             | a MySQL connection object
+    Input:  product_id      | the ID of the product to update
+    Input:  updated_data    | a dictionary representing the updated product data
+    Output: the number of records affected
+    """
+    cursor: MySQLCursor = cnx.cursor()
+
+    # Construct the SQL query for updating the product
+    query: str = (
+        "UPDATE products SET name = %s, uom_id = %s, price_per_unit = %s WHERE product_id = %s"
+    )
+
+    data: Tuple[Union[int, str, float]] = (
+        updated_data["name"],
+        updated_data["uom_id"],
+        updated_data["price_per_unit"],
+        product_id,
+    )
+
+    # Execute the query with the corresponding data
+    cursor.execute(query, data)
+    cnx.commit()
+
+    return cursor.rowcount
+
+
 if __name__ == "__main__":
     cnx = get_sql_connection()
 
-    products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
-    print(products[-1])
+    # products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
+    # print(products[-1])
+    #
 
-    new_product: Dict[str, Union[str, float]] = {
-        "name": "milk (bottle)",
+    updated_data: Dict[str, Union[str, float]] = {
+        "name": "toothpaste (Colgate)",
         "uom_id": 2,
-        "price_per_unit": 3200,
+        "price_per_unit": 1500,
     }
 
-    lastrowid: int = insert_new_product(cnx, new_product)
-    print(lastrowid)
+    #
+    # lastrowid: int = insert_new_product(cnx, new_product)
+    # print(lastrowid)
+    #
+    # products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
+    # print(products[-1])
 
-    products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
-    print(products[-1])
+    product_id: int = 1
+    rowcount: int = update_product(cnx, product_id, updated_data)
+    print(rowcount)
