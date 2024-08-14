@@ -4,11 +4,12 @@ Products DAO (Data Access Object)
 
 from typing import Dict, List, Union
 
+from mysql.connector import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
 from sql_connection import get_sql_connection
 
 
-def get_all_products(cnx) -> List[Dict[str, Union[int, str, float]]]:
+def get_all_products(cnx: MySQLConnection) -> List[Dict[str, Union[int, str, float]]]:
     """
     Fetch all the products from the MySQL database.
     Input:  cnx     | a MySQL connection object
@@ -47,6 +48,10 @@ def get_all_products(cnx) -> List[Dict[str, Union[int, str, float]]]:
     cnx.close()
 
     return products
+
+
+def insert_new_product(cnx, product):
+    pass
 
 
 if __name__ == "__main__":
