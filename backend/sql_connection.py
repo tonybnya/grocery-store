@@ -1,14 +1,14 @@
 """
-Module to handle connection with MySQL
+Module to handle connection with the MySQL database
 """
 
-import mysql.connector
+from mysql.connector import MySQLConnection, connect
 
-# Global variable to hold MySQL connection object
-__cnx = None
+# Global variable to hold a MySQL connection object
+__cnx: MySQLConnection = None
 
 
-def get_sql_connection():
+def get_sql_connection() -> MySQLConnection:
     """
     Establish and return a MySQL connection.
     Output: a MySQL connection object
@@ -16,8 +16,6 @@ def get_sql_connection():
     global __cnx
 
     if __cnx is None:
-        __cnx = mysql.connector.connect(
-            user="root", password="", host="127.0.0.1", database="gs"
-        )
+        __cnx = connect(user="root", password="", host="127.0.0.1", database="gs")
 
     return __cnx
