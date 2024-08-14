@@ -50,7 +50,15 @@ def get_all_products(cnx: MySQLConnection) -> List[Dict[str, Union[int, str, flo
     return products
 
 
-def insert_new_product(cnx, product):
+def insert_new_product(
+    cnx: MySQLConnection, product: Dict[str, Union[int, str, float]]
+):
+    """
+    Insert a new product into the database.
+    Input:  cnx     | a MySQL connection object
+    Input:  product | a dictionary representing the product to insert
+    Output: the last record of the products table
+    """
     pass
 
 
