@@ -91,6 +91,7 @@ def update_product(
     Input:  updated_data    | a dictionary representing the updated product data
     Output: the number of records affected
     """
+    # Define an instance of the MySQL cursor
     cursor: MySQLCursor = cnx.cursor()
 
     # Construct the SQL query for updating the product
@@ -112,6 +113,26 @@ def update_product(
     return cursor.rowcount
 
 
+def delete_product(cnx: MySQLConnection, product_id: int) -> int:
+    """
+    Delete a product from the database.
+    Input:  cnx        | a MySQL connection object
+    Input:  product_id | the ID of the product to delete
+    Output: the number of records affected
+    """
+    # Define an instance of the MySQL cursor
+    cursor: MySQLCursor = cnx.cursor()
+
+    # Construct the SQL query for deleting the product
+    query: str = "DELETE FROM products WHERE product_id = %s"
+
+    # Execute the query with the corresponding product_id
+    cursor.execute(query, (product_id,))
+    cnx.commit()
+
+    return cursor.rowcount
+
+
 if __name__ == "__main__":
     cnx = get_sql_connection()
 
@@ -120,9 +141,9 @@ if __name__ == "__main__":
     #
 
     updated_data: Dict[str, Union[str, float]] = {
-        "name": "toothpaste (Colgate)",
+        "name": "domestic gas (12kg)",
         "uom_id": 2,
-        "price_per_unit": 1500,
+        "price_per_unit": 6700,
     }
 
     #
@@ -132,6 +153,9 @@ if __name__ == "__main__":
     # products: List[Dict[str, Union[str, float]]] = get_all_products(cnx)
     # print(products[-1])
 
-    product_id: int = 1
+    product_id: int = 10
     rowcount: int = update_product(cnx, product_id, updated_data)
+    print(rowcount)
+
+    rowcount = delete_product(cnx, 11)
     print(rowcount)
