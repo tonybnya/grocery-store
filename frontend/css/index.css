@@ -42,6 +42,11 @@ body {
 #header .banner-logo .logo {
   width: 35%;
 }
+#header .banner-logo .logo:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 0 10px #a22a34);
+  scale: 1.1;
+}
 #header .banner-logo i {
   font-size: 25px;
   color: #fff;

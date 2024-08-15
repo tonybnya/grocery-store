@@ -47,6 +47,12 @@ body {
 
     .logo {
       width: 35%;
+
+      &:hover {
+        cursor: pointer;
+        filter: drop-shadow(0 0 10px #a22a34);
+        scale: 1.1;
+      }
     }
 
     i {
