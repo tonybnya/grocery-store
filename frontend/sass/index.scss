@@ -33,12 +33,6 @@
 body {
   font-family: OpenSans-Light;
   color: #464646;
-  /* background-image: url("../assets/images/bg.jpg"); */
-  /* background-color: #cccccc; */
-  /* height: 100vh; */
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
 }
 
 /* Header */
@@ -90,38 +84,48 @@ body {
     align-items: center;
     padding: 10px 70px;
     border-bottom: 1px solid #464646;
+    font-family: OpenSans-Bold;
+    color: #a32a34;
   }
 
-  .btns {
+  .controls {
     height: 70px;
     padding: 10px 70px;
-    float: right;
 
-    .btn {
-      border-radius: 5px;
-      border: 1px solid #296f9a;
-      padding: 0.6em 1.2em;
-      font-size: 1em;
-      font-weight: 500;
-      font-family: OpenSans-SemiBold;
-      background-color: #fff;
-      color: #296f9a;
-      cursor: pointer;
-      transition: border-color 0.25s;
+    h1 {
+      float: left;
+    }
 
-      &:hover {
-        background-color: #296f9a;
-        color: #fff;
+    .btns {
+      float: right;
 
+      .btn {
+        border-radius: 5px;
+        border: 1px solid #296f9a;
+        padding: 0.6em 1.2em;
+        font-size: 1em;
+        font-weight: 500;
+        font-family: OpenSans-SemiBold;
+        background-color: #fff;
+        color: #296f9a;
+        cursor: pointer;
+        transition: border-color 0.25s;
+
+        &:hover {
+          background-color: #296f9a;
+          color: #fff;
+
+        }
       }
     }
+
   }
 
   table {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-collapse: collapse;
     width: 90%;
-    margin: auto;
+    margin: 0 auto;
     /* padding: 10px 70px; */
 
     th {

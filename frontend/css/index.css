@@ -28,12 +28,6 @@
 body {
   font-family: OpenSans-Light;
   color: #464646;
-  /* background-image: url("../assets/images/bg.jpg"); */
-  /* background-color: #cccccc; */
-  /* height: 100vh; */
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
 }
 
 /* Header */
@@ -76,13 +70,20 @@ body {
   align-items: center;
   padding: 10px 70px;
   border-bottom: 1px solid #464646;
+  font-family: OpenSans-Bold;
+  color: #a32a34;
 }
-#container .btns {
+#container .controls {
   height: 70px;
   padding: 10px 70px;
+}
+#container .controls h1 {
+  float: left;
+}
+#container .controls .btns {
   float: right;
 }
-#container .btns .btn {
+#container .controls .btns .btn {
   border-radius: 5px;
   border: 1px solid #296f9a;
   padding: 0.6em 1.2em;
@@ -94,7 +95,7 @@ body {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-#container .btns .btn:hover {
+#container .controls .btns .btn:hover {
   background-color: #296f9a;
   color: #fff;
 }
@@ -102,7 +103,7 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-collapse: collapse;
   width: 90%;
-  margin: auto;
+  margin: 0 auto;
   /* padding: 10px 70px; */
 }
 #container table th {
