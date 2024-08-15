@@ -3,45 +3,36 @@ Main application performing the Flask Server.
 Definition of all the endpoints of the API.
 """
 
-from typing import Dict, List, Union
-
-import dao_products
-from flask import Flask, jsonify
+from database.sql_connection import get_sql_connection
+from flask import Flask
 from mysql.connector import MySQLConnection
-from sql_connection import get_sql_connection
+from routes.route_products import products_blueprint
 
 app = Flask(__name__)
 
-# Define a MySQL connection object as global variable
+# Define a MySQL connection object as a global variable
 # to hold the connection with the MySQL database
 cnx: MySQLConnection = get_sql_connection()
+
+# Store the MySQL connection object in the app's config
+app.config["cnx"] = cnx
+
+# Register the blueprint for product routes
+app.register_blueprint(products_blueprint)
 
 
 @app.route("/")
 def root():
-    return {"message": "Grocery Management System"}
-
-
-@app.route("/products", methods=["GET"])
-def get_products():
     """
-    GET /products
-    READ/GET all the products from the API.
+    Root endpoint for the Grocery Management System API.
+
+    This endpoint returns a simple JSON message indicating that the
+    Grocery Management System API is running. It serves as a basic
+    health check or welcome message.
+
+    Output: a JSON object with a welcome message.
     """
-    # Get the list of all the products from the database
-    products: List[Dict[str, Union[int, str, float]]] = dao_products.get_all_products(
-        cnx
-    )
-
-    # Formatting the list of products into JSON
-    response = jsonify(products)
-
-    # The `Access-Control-Allow-Origin header` is part of the CORS mechanism.
-    # It tells the browser which origins are allowed to access
-    # the resources on the server.
-    response.headers.add("Access-Control-Allow-Origin", "*")
-
-    return response
+    return {"message": "Welcome to the Grocery Store Management System API!"}
 
 
 if __name__ == "__main__":

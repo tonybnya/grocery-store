@@ -4,9 +4,9 @@ Products DAO (Data Access Object)
 
 from typing import Dict, List, Optional, Tuple, Union
 
+from database.sql_connection import get_sql_connection
 from mysql.connector import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
-from sql_connection import get_sql_connection
 
 
 def get_all_products(cnx: MySQLConnection) -> List[Dict[str, Union[int, str, float]]]:
