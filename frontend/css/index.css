@@ -1,0 +1,122 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: OpenSans-Bold;
+  src: url(../assets/fonts/OpenSans-Bold.ttf);
+}
+@font-face {
+  font-family: OpenSans-Light;
+  src: url(../assets/fonts/OpenSans-Light.ttf);
+}
+@font-face {
+  font-family: OpenSans-Medium;
+  src: url(../assets/fonts/OpenSans-Medium.ttf);
+}
+@font-face {
+  font-family: OpenSans-Regular;
+  src: url(../assets/fonts/OpenSans-Regular.ttf);
+}
+@font-face {
+  font-family: OpenSans-SemiBold;
+  src: url(../assets/fonts/OpenSans-SemiBold.ttf);
+}
+body {
+  font-family: OpenSans-Light;
+  color: #464646;
+  /* background-image: url("../assets/images/bg.jpg"); */
+  /* background-color: #cccccc; */
+  /* height: 100vh; */
+  /* background-position: center; */
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+}
+
+/* Header */
+#header .banner-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 10px 70px;
+  background: #000;
+}
+#header .banner-logo .logo {
+  width: 35%;
+}
+#header .banner-logo i {
+  font-size: 25px;
+  color: #fff;
+}
+#header .banner-logo i:hover {
+  scale: 1.1;
+  color: #a32a34;
+}
+#header .banner-title {
+  height: 70px;
+  background: #296f9a;
+  color: #fff;
+  padding: 10px 70px;
+}
+#header .banner-title h5 {
+  font-family: OpenSans-Light;
+}
+#header .banner-title h4 {
+  font-family: OpenSans-SemiBold;
+}
+
+/* Main Container */
+#container .title {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 10px 70px;
+  border-bottom: 1px solid #464646;
+}
+#container .btns {
+  height: 70px;
+  padding: 10px 70px;
+  float: right;
+}
+#container .btns .btn {
+  border-radius: 5px;
+  border: 1px solid #296f9a;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: OpenSans-SemiBold;
+  background-color: #fff;
+  color: #296f9a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+#container .btns .btn:hover {
+  background-color: #296f9a;
+  color: #fff;
+}
+#container table {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-collapse: collapse;
+  width: 90%;
+  margin: auto;
+  /* padding: 10px 70px; */
+}
+#container table th {
+  font-family: OpenSans-Bold;
+  background-color: #464646;
+  color: #fff;
+}
+#container table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+#container table th,
+#container table td {
+  text-align: left;
+  padding: 15px;
+}
+
+/*# sourceMappingURL=index.css.map */

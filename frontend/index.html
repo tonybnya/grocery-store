@@ -3,11 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/grocery.ico" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grocery Store Management System</title>
+    <title>Grocery Store</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- Header -->
+    <div id="header">
+      <div class="banner-logo">
+        <a href="#" class="img-logo" target="_blank">
+          <img
+            src="./assets/images/logo.png"
+            class="logo"
+            alt="trolley image"
+          />
+        </a>
+        <a href="https://github.com/tonybnya" target="_blank">
+          <i class="fa fa-info-circle"></i>
+        </a>
+      </div>
+      <div class="banner-title">
+        <h5>Portfolio Project</h5>
+        <h4>Grocery Store Management System</h4>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="container">
+      <div class="title">GSMS</div>
+      <div class="btns">
+        <button class="btn">Manage Products</button>
+        <button class="btn">New Order</button>
+      </div>
+      <br />
+      <br />
+      <br />
+      <table>
+        <thead>
+          <th>Date</th>
+          <th>Order #</th>
+          <th>Customer Name</th>
+          <th>Total Cost</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Thursday, 15 August 2024 (WAT) 17:48:21 GMT</td>
+            <td>1</td>
+            <td>Tony</td>
+            <td>XAF 1500</td>
+          </tr>
+          <tr>
+            <td>Thursday, 15 August 2024 (WAT) 17:48:21 GMT</td>
+            <td>1</td>
+            <td>Tony</td>
+            <td>XAF 1500</td>
+          </tr>
+          <tr>
+            <td>Thursday, 15 August 2024 (WAT) 17:48:21 GMT</td>
+            <td>1</td>
+            <td>Tony</td>
+            <td>XAF 1500</td>
+          </tr>
+          <tr>
+            <td>Thursday, 15 August 2024 (WAT) 17:48:21 GMT</td>
+            <td>1</td>
+            <td>Tony</td>
+            <td>XAF 1500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>
