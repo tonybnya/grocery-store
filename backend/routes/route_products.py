@@ -4,43 +4,22 @@ Product routes for the Grocery Management System API.
 
 from typing import Dict, List, Union
 
-from flask import Blueprint, jsonify
-from flask.blueprints import BlueprintSetupState
-from mysql.connector import MySQLConnection
+from flask import Blueprint, current_app, jsonify
 from services import service_products
 
-# Create a blueprint for product-related routes
-products_blueprint = Blueprint("products", __name__)
-
-# Assuming `cnx` is passed when the blueprint is registered
-cnx: MySQLConnection
+# Create a Blueprint for products
+products_bp = Blueprint("products_bp", __name__)
 
 
-@products_blueprint.record
-def record_params(setup_state: BlueprintSetupState):
-    """
-    A callback function that runs when the blueprint is registered.
-
-    This function retrieves the MySQL connection object from the Flask
-    app's configuration and assigns it to the global variable `cnx`
-    within the blueprint. This ensures that the connection object is
-    available to all routes within this blueprint.
-
-    Args:
-        setup_state (BlueprintSetupState): The setup state object
-        provided by Flask, which includes the app context and configuration
-        information when the blueprint is being registered.
-    """
-    global cnx
-    cnx = setup_state.app.config["cnx"]
-
-
-@products_blueprint.route("/products", methods=["GET"])
+@products_bp.route("/products", methods=["GET"])
 def get_products():
     """
     GET /products
     READ/GET all the products from the API.
     """
+    # Get the database connection from the app config
+    cnx = current_app.config["cnx"]
+
     # Get the list of all the products from the database
     products: List[Dict[str, Union[int, str, float]]] = (
         service_products.get_all_products(cnx)
