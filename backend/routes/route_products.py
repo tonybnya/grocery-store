@@ -2,26 +2,30 @@
 Product routes for the Grocery Management System API.
 """
 
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 
 from flask import Blueprint, current_app, jsonify
+from mysql.connector import MySQLConnection
 from services import service_products
 
-# Create a Blueprint for products
-products_bp = Blueprint("products_bp", __name__)
+# Create a Blueprint for all the products
+all_products_bp = Blueprint("all_products_bp", __name__)
+
+# Create a Blueprint for a single product
+single_product_bp: Blueprint = Blueprint("single_product_bp", __name__)
 
 
-@products_bp.route("/products", methods=["GET"])
-def get_products():
+@all_products_bp.route("/products", methods=["GET"])
+def get_all_products():
     """
     GET /products
     READ/GET all the products from the API.
     """
     # Get the database connection from the app config
-    cnx = current_app.config["cnx"]
+    cnx: MySQLConnection = current_app.config["cnx"]
 
     # Get the list of all the products from the database
-    products: List[Dict[str, Union[int, str, float]]] = (
+    products: Optional[List[Dict[str, Union[int, str, float]]]] = (
         service_products.get_all_products(cnx)
     )
 
@@ -34,3 +38,7 @@ def get_products():
     response.headers.add("Access-Control-Allow-Origin", "*")
 
     return response
+
+
+def get_single_product():
+    pass

@@ -26,6 +26,8 @@ def get_all_products(
     try:
         # Define an instance of the MySQL cursor
         cursor: MySQLCursor = cnx.cursor()
+
+        # Execute the defined query
         cursor.execute(query)
 
         # Define a list of dictionaries to hold all the products
@@ -49,6 +51,39 @@ def get_all_products(
         return products
     except Error as e:
         print(f"Error fetching products: {e}")
+        return None
+
+
+def get_single_product(
+    cnx: MySQLConnection, product_id: int
+) -> Optional[Dict[str, Union[int, str, float]]]:
+    """
+    Retrieves a single product from the database by its ID.
+
+    Args:
+        cnx (MySQLConnection): The MySQL database connection object.
+        product_id (int): The ID of the product to retrieve.
+
+    Returns:
+        Optional[dict]: A dictionary containing the product details if found,
+                        otherwise None.
+    """
+    # Define the query string to retrieve the product needed
+    query: str = "SELECT * FROM products WHERE id = %s"
+
+    try:
+        # Define an instance of the MySQL cursor
+        cursor: MySQLCursor = cnx.cursor(dictionary=True)
+
+        # Execute the defined query
+        cursor.execute(query, (product_id,))
+
+        # Fetch the selected product
+        product: Dict[str, Union[int, str, float]] = cursor.fetchone()
+
+        return product
+    except Error as e:
+        print(f"Error fetching product: {e}")
         return None
 
 
