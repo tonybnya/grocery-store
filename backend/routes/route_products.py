@@ -40,5 +40,11 @@ def get_all_products():
     return response
 
 
-def get_single_product():
-    pass
+@single_product_bp.route("/products/<int:product_id>", methods=["GET"])
+def get_single_product(product_id: int) -> Optional[Dict[str, Union[int, str, float]]]:
+    """
+    GET /products/{product_id}
+    READ/GET a single product by its ID
+    Input: product_id (int) | the ID of the product to fetch
+    Output:
+    """

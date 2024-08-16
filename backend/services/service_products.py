@@ -4,7 +4,6 @@ Products DAO (Data Access Object)
 
 from typing import Dict, List, Optional, Tuple, Union
 
-from database.sql_connection import get_sql_connection
 from mysql.connector import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
 
@@ -14,8 +13,9 @@ def get_all_products(
 ) -> Optional[List[Dict[str, Union[int, str, float]]]]:
     """
     Fetch all the products from the MySQL database.
-    Input:  cnx     | a MySQL connection object
-    Output: a list of dictionaries or None if an error occurs
+
+    Input:  cnx (MySQLConnection)     | a MySQL connection object
+    Output: a list of dictionaries of products or None
     """
     # Define a string as a query to fetch all the products from the database
     # and join with each product with its corresponding Unit of Measure (uom)
@@ -60,13 +60,9 @@ def get_single_product(
     """
     Retrieves a single product from the database by its ID.
 
-    Args:
-        cnx (MySQLConnection): The MySQL database connection object.
-        product_id (int): The ID of the product to retrieve.
-
-    Returns:
-        Optional[dict]: A dictionary containing the product details if found,
-                        otherwise None.
+    Input:  cnx (MySQLConnection)   | a MySQL connection object
+    Input:  product_id (int)        | the ID of the product to update
+    Output: a dictionary containing the product details if found or None
     """
     # Define the query string to retrieve the product needed
     query: str = "SELECT * FROM products WHERE id = %s"
@@ -92,8 +88,9 @@ def insert_new_product(
 ) -> Optional[int]:
     """
     Insert a new product into the database.
-    Input:  cnx     | a MySQL connection object
-    Input:  product | a dictionary representing the product to insert
+
+    Input:  cnx (MySQLConnection)   | a MySQL connection object
+    Input:  product (dict)          | a dictionary representing the product to insert
     Output: the number of records into the table or None
     """
     # Define an instance of the MySQL cursor
@@ -127,9 +124,10 @@ def update_product(
 ) -> int:
     """
     Update an existing product in the database.
-    Input:  cnx             | a MySQL connection object
-    Input:  product_id      | the ID of the product to update
-    Input:  updated_data    | a dictionary representing the updated product data
+
+    Input:  cnx (MySQLConnection)   | a MySQL connection object
+    Input:  product_id (int)        | the ID of the product to update
+    Input:  updated_data (dict)     | a dictionary representing the updated product data
     Output: the number of records affected
     """
     # Define an instance of the MySQL cursor
@@ -157,8 +155,9 @@ def update_product(
 def delete_product(cnx: MySQLConnection, product_id: int) -> int:
     """
     Delete a product from the database.
-    Input:  cnx        | a MySQL connection object
-    Input:  product_id | the ID of the product to delete
+
+    Input:  cnx (MySQLConnection)   | a MySQL connection object
+    Input:  product_id (int)        | the ID of the product to delete
     Output: the number of records affected
     """
     # Define an instance of the MySQL cursor
@@ -172,7 +171,3 @@ def delete_product(cnx: MySQLConnection, product_id: int) -> int:
     cnx.commit()
 
     return cursor.rowcount
-
-
-if __name__ == "__main__":
-    cnx = get_sql_connection()
