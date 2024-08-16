@@ -9,41 +9,47 @@ from mysql.connector import MySQLConnection
 from mysql.connector.cursor import MySQLCursor
 
 
-def get_all_products(cnx: MySQLConnection) -> List[Dict[str, Union[int, str, float]]]:
+def get_all_products(
+    cnx: MySQLConnection,
+) -> Optional[List[Dict[str, Union[int, str, float]]]]:
     """
     Fetch all the products from the MySQL database.
     Input:  cnx     | a MySQL connection object
-    Output: a list of dictionaries
+    Output: a list of dictionaries or None if an error occurs
     """
-    # Define an instance of the MySQL cursor
-    cursor: MySQLCursor = cnx.cursor()
-
     # Define a string as a query to fetch all the products from the database
     # and join with each product with its corresponding Unit of Measure (uom)
     query: str = (
         "SELECT products.product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name FROM products INNER JOIN uom ON products.uom_id=uom.uom_id"
     )
-    cursor.execute(query)
 
-    # Define a list of dictionaries to hold all the products
-    # Dictonary keys should be strings
-    # Dictonary values could be either integers, strings or floats
-    products: List[Dict[str, Union[int, str, float]]] = []
+    try:
+        # Define an instance of the MySQL cursor
+        cursor: MySQLCursor = cnx.cursor()
+        cursor.execute(query)
 
-    # Traverse records (tuples) and append elements as dictionaries
-    # into the predefined products list
-    for product_id, name, uom_id, price_per_unit, uom_name in cursor:
-        products.append(
-            {
-                "product_id": product_id,
-                "name": name,
-                "uom_id": uom_id,
-                "price_per_unit": price_per_unit,
-                "uom_name": uom_name,
-            }
-        )
+        # Define a list of dictionaries to hold all the products
+        # Dictonary keys should be strings
+        # Dictonary values could be either integers, strings or floats
+        products: List[Dict[str, Union[int, str, float]]] = []
 
-    return products
+        # Traverse records (tuples) and append elements as dictionaries
+        # into the predefined products list
+        for product_id, name, uom_id, price_per_unit, uom_name in cursor:
+            products.append(
+                {
+                    "product_id": product_id,
+                    "name": name,
+                    "uom_id": uom_id,
+                    "price_per_unit": price_per_unit,
+                    "uom_name": uom_name,
+                }
+            )
+
+        return products
+    except Error as e:
+        print(f"Error fetching products: {e}")
+        return None
 
 
 def insert_new_product(
