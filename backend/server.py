@@ -6,7 +6,7 @@ Definition of all the endpoints of the API.
 from database.sql_connection import get_sql_connection
 from flask import Flask
 from mysql.connector import MySQLConnection
-from routes.route_products import products_blueprint
+from routes import route_products
 
 app = Flask(__name__)
 
@@ -16,9 +16,6 @@ cnx: MySQLConnection = get_sql_connection()
 
 # Store the MySQL connection object in the app's config
 app.config["cnx"] = cnx
-
-# Register the blueprint for product routes
-app.register_blueprint(products_blueprint)
 
 
 @app.route("/")
@@ -33,6 +30,10 @@ def root():
     Output: a JSON object with a welcome message.
     """
     return {"message": "Welcome to the Grocery Store Management System API!"}
+
+
+# Register the product routes
+app.register_blueprint(route_products.products_bp)
 
 
 if __name__ == "__main__":
