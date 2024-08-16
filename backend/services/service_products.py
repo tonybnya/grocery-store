@@ -4,7 +4,7 @@ Products DAO (Data Access Object)
 
 from typing import Dict, List, Optional, Tuple, Union
 
-from mysql.connector import MySQLConnection
+from mysql.connector import Error, MySQLConnection
 from mysql.connector.cursor import MySQLCursor
 
 
@@ -65,7 +65,7 @@ def get_single_product(
     Output: a dictionary containing the product details if found or None
     """
     # Define the query string to retrieve the product needed
-    query: str = "SELECT * FROM products WHERE id = %s"
+    query: str = "SELECT * FROM products WHERE products.product_id = %s"
 
     try:
         # Define an instance of the MySQL cursor
