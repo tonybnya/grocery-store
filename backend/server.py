@@ -3,9 +3,10 @@ Main application performing the Flask Server.
 Definition of all the endpoints of the API.
 """
 
-from database.sql_connection import get_sql_connection
 from flask import Flask
 from mysql.connector import MySQLConnection
+
+from database.sql_connection import get_sql_connection
 from routes import route_products
 
 app = Flask(__name__)
@@ -36,6 +37,8 @@ def root():
 app.register_blueprint(route_products.all_products_bp)
 app.register_blueprint(route_products.single_product_bp)
 app.register_blueprint(route_products.insert_product_bp)
+app.register_blueprint(route_products.update_product_bp)
+app.register_blueprint(route_products.delete_product_bp)
 
 
 if __name__ == "__main__":
