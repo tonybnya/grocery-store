@@ -182,5 +182,29 @@ def update_product(product_id: int) -> Union[Response, Tuple[Response, Literal[4
 
 
 @delete_product_bp.route("/products/<int:product_id>", methods=["DELETE"])
-def delete_product():
-    pass
+def delete_product(product_id: int) -> Union[Response, Tuple[Response, Literal[404]]]:
+    """
+    DELETE /products/{product_id}
+    DELETE a product by its ID
+
+    Input: product_id (int) | the ID of the product to delete
+    Output: a Flask Response object
+            including HTTP status code, JSON data, and CORS headers
+    """
+    # Get the database connection from the app config
+    cnx: MySQLConnection = current_app.config["cnx"]
+
+    # Delete the product from the database
+    rows_affected: int = service_products.delete_product(cnx, product_id)
+
+    if rows_affected > 0:
+        # Return a success response indicating the product was deleted
+        response = make_response(jsonify({"message": "Product deleted successfully"}))
+    else:
+        # Return a 404 error if the product was not found
+        response = make_response(jsonify({"error": "Product not found"}), 404)
+
+    # Add CORS headers
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
