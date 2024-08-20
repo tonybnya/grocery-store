@@ -35,6 +35,7 @@ def root():
 # Register the product routes
 app.register_blueprint(route_products.all_products_bp)
 app.register_blueprint(route_products.single_product_bp)
+app.register_blueprint(route_products.insert_product_bp)
 
 
 if __name__ == "__main__":

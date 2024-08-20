@@ -4,7 +4,7 @@ Product routes for the Grocery Management System API.
 
 from typing import Dict, List, Literal, Optional, Tuple, Union
 
-from flask import Blueprint, Response, current_app, jsonify
+from flask import Blueprint, Response, current_app, jsonify, request
 from mysql.connector import MySQLConnection
 from services import service_products
 
@@ -14,9 +14,12 @@ all_products_bp = Blueprint("all_products_bp", __name__)
 # Create a Blueprint for a single product
 single_product_bp: Blueprint = Blueprint("single_product_bp", __name__)
 
+# Create a Blueprint for product insertion
+insert_product_bp: Blueprint = Blueprint("insert_product_bp", __name__)
+
 
 @all_products_bp.route("/products", methods=["GET"])
-def get_all_products() -> Response:
+def get_all_products() -> Union[Response, Tuple[Response, Literal[404]]]:
     """
     GET /products
     READ/GET all the products from the API.
@@ -32,9 +35,11 @@ def get_all_products() -> Response:
         service_products.get_all_products(cnx)
     )
 
+    response: Union[Response, Tuple[Response, Literal[404]]]
+
     if products:
         # Formatting the list of products into JSON
-        response: Response = jsonify(products)
+        response = jsonify(products)
     else:
         # Return a 404 error if the product is not found
         response = jsonify({"error": "Product not found"}), 404
@@ -65,9 +70,11 @@ def get_single_product(
     # Fetch the product details from the database
     product = service_products.get_single_product(cnx, product_id)
 
+    response: Union[Response, Tuple[Response, Literal[404]]]
+
     if product:
         # Formatting the product details into JSON
-        response: Response = jsonify(product)
+        response = jsonify(product)
     else:
         # Return a 404 error if the product is not found
         response = jsonify({"error": "Product not found"}), 404
@@ -75,6 +82,49 @@ def get_single_product(
     # The `Access-Control-Allow-Origin` header is part of the CORS mechanism.
     # It tells the browser which origins are allowed to access
     # the resources on the server.
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
+
+
+@insert_product_bp.route("/products", methods=["POST"])
+def insert_product() -> Union[Response, Tuple[Response, Literal[400]]]:
+    """
+    POST /products
+    CREATE/POST a new product
+
+    Input: a JSON object representing the product to insert
+    Output: a Flask Response object
+            including HTTP status code, JSON data, and CORS headers
+    """
+    # Get the database connection from the app config
+    cnx: MySQLConnection = current_app.config["cnx"]
+
+    # Parse the JSON data from the request body
+    product_data: Dict[str, Union[int, str, float]] = request.get_json()
+
+    # Validate the incoming data from the request body
+    required_fields: List[str] = ["name", "uom_id", "price_per_unit"]
+    for field in required_fields:
+        if field not in product_data:
+            response = jsonify({"error": f"Missing required field: {field}"})
+            return response, 400
+
+    # Insert the product into the database
+    product_id: Optional[int] = service_products.insert_new_product(cnx, product_data)
+
+    response: Union[Response, Tuple[Response, Literal[400]]]
+
+    if product_id:
+        # Return a success response with the newly created product ID
+        response = jsonify({"message": "Product created", "product_id": product_id})
+        response.status_code = 201
+    else:
+        # Return an error response if the insertion failed
+        response = jsonify({"error": "Failed to insert product"})
+        return response, 400
+
+    # Add CORS headers
     response.headers.add("Access-Control-Allow-Origin", "*")
 
     return response
