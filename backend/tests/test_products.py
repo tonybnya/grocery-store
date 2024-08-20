@@ -35,14 +35,42 @@ def test_get_products(client):
     assert response.content_type == "application/json"
 
     # Check that the response contains a list of products
-    data = response.get_json()
-    assert isinstance(data, list)
+    products = response.get_json()
+    assert isinstance(products, list)
 
-    # If you have known data in your database, you can perform more specific checks:
-    if data:
-        product = data[0]
+    # Perform more specific checks (assuming I know the data in the db)
+    if products:
+        product = products[0]
         assert "product_id" in product
         assert "name" in product
         assert "uom_id" in product
         assert "price_per_unit" in product
         assert "uom_name" in product
+
+
+def test_get_single_product(client):
+    """
+    Test the GET /products/{product_id} endpoint.
+    """
+    # Define an existing ID in the database
+    product_id: int = 1
+
+    # Simulate a GET request to the /products/1 endpoint
+    response = client.get("/products/" + str(product_id))
+
+    # Ensure that the request was successful (status code 200)
+    assert response.status_code == 200
+
+    # Ensure the response is in JSON format
+    assert response.content_type == "application/json"
+
+    # Check that the response contains a dictionary
+    product = response.get_json()
+    assert isinstance(product, dict)
+
+    # I know the product with the ID 1 in the db
+    if product:
+        assert product.get("product_id") == 1
+        assert product.get("name") == "toothpaste (Colgate)"
+        assert product.get("price_per_unit") == 1500.0
+        assert product.get("uom_id") == 2
