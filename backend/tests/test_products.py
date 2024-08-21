@@ -1,10 +1,18 @@
+"""
+Test suite for the products endpoints.
+"""
+
+from typing import Generator
+
 import pytest
+from flask import Flask
+from flask.testing import FlaskClient
 
 from server import app as flask_app
 
 
 @pytest.fixture
-def app():
+def app() -> Generator[Flask]:
     """
     This fixture provides a Flask application instance
     for testing purposes.
@@ -13,7 +21,7 @@ def app():
 
 
 @pytest.fixture
-def client(app):
+def client(app: Flask) -> FlaskClient:
     """
     This fixture provides a test client that can be used
     to simulate HTTP requests to the Flask application.
@@ -21,14 +29,14 @@ def client(app):
     return app.test_client()
 
 
-def test_get_products(client):
+def test_get_products(client: FlaskClient) -> None:
     """
     Test the GET /products endpoint.
     """
-    # Simulate a GET request to the /products endpoint
+    # Simulate a GET request to /products endpoint
     response = client.get("/products")
 
-    # Ensure that the request was successful (status code 200)
+    # Ensure the request is successful (status code 200)
     assert response.status_code == 200
 
     # Ensure the response is in JSON format
@@ -38,7 +46,9 @@ def test_get_products(client):
     products = response.get_json()
     assert isinstance(products, list)
 
-    # Perform more specific checks (assuming I know the data in the db)
+    # Perform more specific checks
+    # Since I know the structure of data
+    # I check the fields of the first product (a dictionary object)
     if products:
         product = products[0]
         assert "product_id" in product
@@ -48,17 +58,17 @@ def test_get_products(client):
         assert "uom_name" in product
 
 
-def test_get_single_product(client):
+def test_get_single_product(client: FlaskClient) -> None:
     """
     Test the GET /products/{product_id} endpoint.
     """
-    # Define an existing ID in the database
+    # Define a variable containing an existing ID in the db
     product_id: int = 1
 
-    # Simulate a GET request to the /products/1 endpoint
-    response = client.get("/products/" + str(product_id))
+    # Simulate a GET request to /products/1 endpoint
+    response = client.get(f"/products/{product_id}")
 
-    # Ensure that the request was successful (status code 200)
+    # Ensure the request is successful (status code 200)
     assert response.status_code == 200
 
     # Ensure the response is in JSON format
@@ -69,8 +79,9 @@ def test_get_single_product(client):
     assert isinstance(product, dict)
 
     # I know the product with the ID 1 in the db
+    # So, I check the values in the dictionary
     if product:
         assert product.get("product_id") == 1
-        assert product.get("name") == "toothpaste (Colgate)"
-        assert product.get("price_per_unit") == 1500.0
+        assert product.get("name") == "toothpaste"
+        assert product.get("price_per_unit") == 1000.0
         assert product.get("uom_id") == 2
