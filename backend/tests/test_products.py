@@ -12,7 +12,7 @@ from server import app as flask_app
 
 
 @pytest.fixture
-def app() -> Generator[Flask]:
+def app() -> Generator[Flask, Flask, Flask]:
     """
     This fixture provides a Flask application instance
     for testing purposes.
