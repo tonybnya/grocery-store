@@ -122,15 +122,10 @@ def insert_product() -> Union[Response, Tuple[Response, Literal[400]]]:
     required_fields: List[str] = ["name", "uom_id", "price_per_unit"]
     for field in required_fields:
         if field not in product_data:
-            response = make_response(
+            return make_response(
                 jsonify({"error": f"Missing required field: {field}"}), 400
             )
-            return response
-
-    # Insert the new product into the database
-    product_id: Optional[int] = service_products.insert_new_product(cnx, product_data)
-
-    if product_id:
+    if product_id := service_products.insert_new_product(cnx, product_data):
         # Create a success response with the newly created product ID
         response = make_response(
             jsonify({"message": "Product created", "product_id": product_id}), 201
@@ -162,7 +157,7 @@ def update_product(product_id: int) -> Union[Response, Tuple[Response, Literal[4
     cnx: MySQLConnection = current_app.config["cnx"]
 
     # Parse the JSON data from the request body
-    updated_data: Dict[str, Union[int, str, float]] = request.get_json()
+    updated_product: Dict[str, Union[int, str, float]] = request.get_json()
 
     # Declare a variable to hold the Flask response object
     response: Union[Response, Tuple[Response, Literal[400]]]
@@ -170,25 +165,34 @@ def update_product(product_id: int) -> Union[Response, Tuple[Response, Literal[4
     # Validate the incoming data from the request body
     required_fields: List[str] = ["name", "uom_id", "price_per_unit"]
     for field in required_fields:
-        if field not in updated_data:
-            response = make_response(
+        if field not in updated_product:
+            return make_response(
                 jsonify({"error": f"Missing required field: {field}"}), 400
             )
-            return response
+    # Validate the incoming data from the request body
+    # required_fields: List[str] = ["name", "uom_id", "price_per_unit"]
+    # for field in required_fields:
+    #     if field not in updated_data:
+    #         response = make_response(
+    #             jsonify({"error": f"Missing required field: {field}"}), 400
+    #         )
+    #         return response
 
     # Update the product in the database
-    rows_affected: int = service_products.update_product(cnx, product_id, updated_data)
+    rows_affected: int = service_products.update_product(
+        cnx, product_id, updated_product
+    )
 
     if rows_affected > 0:
         # Create a success response with the number of rows affected
-        response = jsonify({"message": "Product updated successfully"})
-    else:
-        # Create a response with a 400 error if the update failed
-        response = make_response(
-            jsonify({"error": "Failed to update product or product not found"}), 400
+        response = jsonify(
+            {"message": "Product updated successfully", "product": updated_product}
         )
-        return response
-
+    else:
+        return make_response(
+            jsonify({"error": "Failed to update product or product not found"}),
+            400,
+        )
     # The `Access-Control-Allow-Origin` header is part of the CORS mechanism.
     # It tells the browser which origins are allowed to access
     # the resources on the server.
