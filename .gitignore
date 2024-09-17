@@ -8,10 +8,12 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Virtual environment
-.venv
-venv
+.venv/
+venv/
 
 __pycache__/
+.pytest_cache/
+.ruffcache/
 
 node_modules
 dist
