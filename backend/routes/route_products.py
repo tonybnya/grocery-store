@@ -169,14 +169,6 @@ def update_product(product_id: int) -> Union[Response, Tuple[Response, Literal[4
             return make_response(
                 jsonify({"error": f"Missing required field: {field}"}), 400
             )
-    # Validate the incoming data from the request body
-    # required_fields: List[str] = ["name", "uom_id", "price_per_unit"]
-    # for field in required_fields:
-    #     if field not in updated_data:
-    #         response = make_response(
-    #             jsonify({"error": f"Missing required field: {field}"}), 400
-    #         )
-    #         return response
 
     # Update the product in the database
     rows_affected: int = service_products.update_product(
