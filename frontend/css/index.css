@@ -1,10 +1,4 @@
-/* Global Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Variables */
 @font-face {
   font-family: OpenSans-Bold;
   src: url(../assets/fonts/OpenSans-Bold.ttf);
@@ -25,9 +19,18 @@
   font-family: OpenSans-SemiBold;
   src: url(../assets/fonts/OpenSans-SemiBold.ttf);
 }
+/* Mixins */
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: OpenSans-Light;
-  color: #464646;
+  color: #333;
+  background-color: #f8f9fa;
 }
 
 /* Header */
@@ -89,20 +92,15 @@ body {
   float: right;
 }
 #container .controls .btns .btn {
-  border-radius: 5px;
-  border: 1px solid #296f9a;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: OpenSans-SemiBold;
-  background-color: #fff;
-  color: #296f9a;
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 #container .controls .btns .btn:hover {
-  background-color: #296f9a;
-  color: #fff;
+  opacity: 0.9;
 }
 #container table {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

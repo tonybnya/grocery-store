@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSMS - Products page</title>
+    <link rel="stylesheet" href="./css/products.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  </head>
+  <body>
+      <!-- Header -->
+      <div id="header">
+        <div class="banner-logo">
+          <a href="#" class="img-logo">
+            <img
+              src="./assets/images/logo.png"
+              class="logo"
+              alt="trolley image"
+            />
+          </a>
+          <a href="https://github.com/tonybnya" target="_blank">
+            <i class="fa fa-info-circle"></i>
+          </a>
+        </div>
+        <div class="banner-title">
+          <h5>Portfolio Project</h5>
+          <h4>Grocery Store Management System</h4>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <main class="content">
+        <section class="products">
+          <h2>Manage Products</h2>
+          <div class="actions">
+            <button
+              class="add-product-button"
+              data-toggle="modal"
+              data-target="#productModal"
+            >
+            <i class="fa-solid fa-plus"></i> Add New Product
+            </button>
+          </div>
+          <table class="products-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Unit</th>
+                <th>Price Per Unit</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </main>
+
+      <!-- Modal -->
+      <div class="modal" id="productModal">
+        <div class="modal-content">
+          <header class="modal-header">
+            <h4>Add New Product</h4>
+          </header>
+          <div class="modal-body">
+            <form id="productForm">
+              <input type="hidden" name="id" id="id" value="0" />
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Name" />
+              </div>
+              <div class="form-group">
+                <label for="uoms">Unit</label>
+                <select id="uoms" name="uoms"></select>
+              </div>
+              <div class="form-group">
+                <label for="price">Price Per Unit</label>
+                <input
+                  id="price"
+                  name="price"
+                  type="text"
+                  placeholder="Price Per Unit"
+                />
+              </div>
+            </form>
+          </div>
+          <footer class="modal-footer">
+            <button class="button secondary" data-dismiss="modal">Close</button>
+            <button class="button primary" id="saveProduct">Save</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
